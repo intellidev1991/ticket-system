@@ -4,7 +4,8 @@ import { Movie, Show, Theater, Ticket, User } from "@/types";
 import { formItemGenerator } from "@/utility/formGenerator";
 import { tools } from "@/utility/tools";
 import { Button, Form, Modal, Table } from "antd";
-import { useQRCode } from "next-qrcode";
+import { QRCodeSVG } from "qrcode.react";
+
 import React, { useMemo, useRef } from "react";
 import moment from "moment";
 
@@ -29,7 +30,6 @@ const FormGenerator: React.FC<IFormGeneratorProps> = React.memo(
     const [form] = Form.useForm();
 
     const ref = useRef(tools.objectFactory(type));
-    const { Canvas } = useQRCode();
 
     const onFinish = (values: any) => {
       values = tools.parseJson(values);
@@ -121,15 +121,7 @@ const FormGenerator: React.FC<IFormGeneratorProps> = React.memo(
             render: (id: string) => {
               return (
                 <div>
-                  <Canvas
-                    text={id}
-                    options={{
-                      level: "H",
-                      margin: 1,
-                      scale: 2,
-                      width: 150,
-                    }}
-                  />
+                  <QRCodeSVG value={`${id}`} />
                 </div>
               );
             },
